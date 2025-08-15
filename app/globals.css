@@ -14,23 +14,56 @@
 
 @layer components {
   .input-field {
-    @apply w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 bg-white;
+    @apply w-full px-3 py-2 md:px-4 md:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 bg-white text-sm md:text-base;
   }
   
   .btn-primary {
-    @apply bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-primary-600;
+    @apply bg-primary-600 hover:bg-primary-700 text-white font-semibold py-2 px-4 md:py-3 md:px-6 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-primary-600 text-sm md:text-base;
   }
   
   .btn-secondary {
-    @apply bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-3 px-6 rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-200;
+    @apply bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 md:py-3 md:px-6 rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-200 text-sm md:text-base;
   }
   
   .card {
-    @apply bg-white rounded-xl shadow-lg border border-gray-100 p-6;
+    @apply bg-white rounded-xl shadow-lg border border-gray-100 p-4 md:p-6;
   }
   
   .section-title {
-    @apply text-xl font-bold text-gray-800 mb-4 flex items-center gap-2;
+    @apply text-lg md:text-xl font-bold text-gray-800 mb-3 md:mb-4 flex items-center gap-2;
+  }
+
+  /* Mobile-specific typography */
+  .mobile-title {
+    @apply text-xl sm:text-2xl md:text-4xl font-bold text-gray-800;
+  }
+  
+  .mobile-subtitle {
+    @apply text-xs sm:text-sm md:text-base text-gray-600;
+  }
+  
+  .mobile-description {
+    @apply text-sm md:text-base text-gray-600;
+  }
+  
+  .mobile-card-title {
+    @apply text-sm md:text-base font-semibold text-gray-800;
+  }
+  
+  .mobile-card-description {
+    @apply text-xs md:text-sm text-gray-600;
+  }
+  
+  .mobile-label {
+    @apply text-xs md:text-sm font-medium text-gray-700;
+  }
+  
+  .mobile-value {
+    @apply text-sm md:text-lg font-semibold;
+  }
+  
+  .mobile-large-value {
+    @apply text-lg md:text-2xl font-bold;
   }
 }
 
@@ -44,6 +77,29 @@
     background: white !important;
     color: black !important;
     box-shadow: none !important;
+  }
+}
+
+/* Mobile-specific adjustments */
+@media (max-width: 640px) {
+  .container {
+    @apply px-3;
+  }
+  
+  .mobile-compact {
+    @apply space-y-4;
+  }
+  
+  .mobile-grid {
+    @apply grid-cols-1 gap-3;
+  }
+  
+  .mobile-padding {
+    @apply p-3;
+  }
+  
+  .mobile-margin {
+    @apply mb-4;
   }
 }
 

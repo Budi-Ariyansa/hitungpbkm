@@ -133,13 +133,13 @@ ${data.additionalNotes ? `📝 Catatan:\n${data.additionalNotes}\n` : ''}
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 md:space-y-6">
       {/* Summary Content - untuk di-capture sebagai Image */}
-      <div ref={summaryRef} className="bg-white p-6 rounded-lg shadow-sm export-content">
+      <div ref={summaryRef} className="bg-white p-4 md:p-6 rounded-lg shadow-sm export-content">
         {/* Header dengan Logo */}
-        <div className="text-center mb-6">
-          <div className="flex justify-center items-center gap-4 mb-4">
-            <div className="relative w-16 h-16">
+        <div className="text-center mb-4 md:mb-6">
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-3 md:gap-4 mb-3 md:mb-4">
+            <div className="relative w-12 h-12 md:w-16 md:h-16 flex-shrink-0">
               <NextImage
                 src="/logo-pbkm.jpg"
                 alt="PB Kena Mental Logo"
@@ -147,50 +147,50 @@ ${data.additionalNotes ? `📝 Catatan:\n${data.additionalNotes}\n` : ''}
                 className="rounded-full object-cover shadow-lg"
               />
             </div>
-            <div>
-              <h1 className="text-3xl font-bold text-gray-800">
+            <div className="text-center sm:text-left">
+              <h1 className="text-xl md:text-3xl font-bold text-gray-800">
                 🏸 Undangan Bermain Badminton
               </h1>
-              <p className="text-gray-600">PB Kena Mental</p>
+              <p className="mobile-subtitle">PB Kena Mental</p>
             </div>
           </div>
-          <p className="text-gray-600">{formatDate()}</p>
+          <p className="mobile-subtitle">{formatDate()}</p>
         </div>
 
         {/* Gambar Undangan (jika ada) */}
         {data.imagePreview && (
-          <div className="mb-6 text-center">
+          <div className="mb-4 md:mb-6 text-center">
             <img
               src={data.imagePreview}
               alt="Gambar Undangan"
-              className="max-w-full max-h-64 mx-auto rounded-lg shadow-md"
+              className="max-w-full max-h-48 md:max-h-64 mx-auto rounded-lg shadow-md"
             />
           </div>
         )}
 
         {/* Informasi Lapangan */}
-        <div className="card mb-6">
+        <div className="card mb-4 md:mb-6">
           <h2 className="section-title">
-            <MapPin className="w-5 h-5 text-primary-600" />
+            <MapPin className="w-4 h-4 md:w-5 md:h-5 text-primary-600" />
             Informasi Lapangan
           </h2>
-          <div className="space-y-4">
-            <div className="bg-gray-50 p-4 rounded-lg">
-              <p className="text-sm text-gray-600">Nama Lapangan</p>
-              <p className="font-semibold text-lg">{data.courtName}</p>
+          <div className="space-y-3 md:space-y-4">
+            <div className="bg-gray-50 p-3 md:p-4 rounded-lg">
+              <p className="text-xs md:text-sm text-gray-600">Nama Lapangan</p>
+              <p className="mobile-value">{data.courtName}</p>
             </div>
             {data.courtLocation && (
-              <div className="bg-gray-50 p-4 rounded-lg">
-                <p className="text-sm text-gray-600">Lokasi</p>
+              <div className="bg-gray-50 p-3 md:p-4 rounded-lg">
+                <p className="text-xs md:text-sm text-gray-600">Lokasi</p>
                 <div className="flex items-center gap-2">
                   <a
                     href={data.courtLocation}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-primary-600 hover:text-primary-700 font-medium flex items-center gap-1"
+                    className="text-primary-600 hover:text-primary-700 font-medium flex items-center gap-1 text-sm md:text-base"
                   >
                     Lihat di Google Maps
-                    <ExternalLink className="w-4 h-4" />
+                    <ExternalLink className="w-3 h-3 md:w-4 md:h-4" />
                   </a>
                 </div>
               </div>
@@ -199,46 +199,46 @@ ${data.additionalNotes ? `📝 Catatan:\n${data.additionalNotes}\n` : ''}
         </div>
 
         {/* Informasi Waktu */}
-        <div className="card mb-6">
+        <div className="card mb-4 md:mb-6">
           <h2 className="section-title">
-            <Calendar className="w-5 h-5 text-primary-600" />
+            <Calendar className="w-4 h-4 md:w-5 md:h-5 text-primary-600" />
             Waktu Bermain
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="bg-gray-50 p-4 rounded-lg">
-              <p className="text-sm text-gray-600">Hari & Tanggal</p>
-              <p className="font-semibold text-lg">{formatPlayDate()}</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
+            <div className="bg-gray-50 p-3 md:p-4 rounded-lg">
+              <p className="text-xs md:text-sm text-gray-600">Hari & Tanggal</p>
+              <p className="mobile-value">{formatPlayDate()}</p>
             </div>
-            <div className="bg-gray-50 p-4 rounded-lg">
-              <p className="text-sm text-gray-600">Waktu</p>
-              <p className="font-semibold text-lg">{data.startTime} - {data.endTime} WIB</p>
+            <div className="bg-gray-50 p-3 md:p-4 rounded-lg">
+              <p className="text-xs md:text-sm text-gray-600">Waktu</p>
+              <p className="mobile-value">{data.startTime} - {data.endTime} WIB</p>
             </div>
           </div>
         </div>
 
         {/* Catatan Tambahan */}
         {data.additionalNotes && (
-          <div className="card mb-6">
+          <div className="card mb-4 md:mb-6">
             <h2 className="section-title">
-              <Info className="w-5 h-5 text-primary-600" />
+              <Info className="w-4 h-4 md:w-5 md:h-5 text-primary-600" />
               Catatan Tambahan
             </h2>
-            <div className="bg-gray-50 p-4 rounded-lg">
-              <p className="whitespace-pre-wrap">{data.additionalNotes}</p>
+            <div className="bg-gray-50 p-3 md:p-4 rounded-lg">
+              <p className="whitespace-pre-wrap text-sm md:text-base">{data.additionalNotes}</p>
             </div>
           </div>
         )}
 
         {/* Call to Action */}
-        <div className="text-center mt-6 p-4 bg-success-50 rounded-lg border-2 border-success-200">
-          <p className="text-success-800 font-semibold text-lg">
+        <div className="text-center mt-4 md:mt-6 p-3 md:p-4 bg-success-50 rounded-lg border-2 border-success-200">
+          <p className="text-success-800 font-semibold text-base md:text-lg">
             🙏 Ayo main bareng!
           </p>
         </div>
       </div>
 
       {/* Action Buttons */}
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-3 md:gap-4">
         {/* Share Button */}
         <div className="flex justify-center">
           <button
@@ -251,7 +251,7 @@ ${data.additionalNotes ? `📝 Catatan:\n${data.additionalNotes}\n` : ''}
         </div>
 
         {/* Download Options */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
           <button
             onClick={handleDownload}
             disabled={isGenerating}
@@ -267,7 +267,7 @@ ${data.additionalNotes ? `📝 Catatan:\n${data.additionalNotes}\n` : ''}
             className="btn-secondary flex items-center justify-center gap-2"
           >
             <Image className="w-4 h-4" />
-            {isGenerating ? 'Membuat Gambar...' : 'Download PNG'}
+            <span className="text-xs md:text-sm">{isGenerating ? 'Membuat Gambar...' : 'Download PNG'}</span>
           </button>
         </div>
 

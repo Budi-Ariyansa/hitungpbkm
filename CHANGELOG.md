@@ -5,6 +5,30 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.0] - 2024-08-15
+
+### 📱 Enhanced Mobile Responsiveness
+- 🎨 **Improved Typography**: Responsive font sizes for better mobile readability
+- 📏 **Optimized Spacing**: Reduced padding and margins for mobile screens
+- 🔘 **Better Buttons**: Smaller, more touch-friendly buttons on mobile
+- 📋 **Compact Forms**: Streamlined form layouts with better mobile UX
+- 🖼️ **Responsive Images**: Properly sized logos and images for all screen sizes
+- 📱 **Mobile-First Design**: Optimized for mobile with desktop enhancements
+
+### 🎯 Mobile Improvements
+- **Header**: Flexible layout that stacks on mobile, side-by-side on desktop
+- **Mode Selector**: Compact design with abbreviated text on mobile
+- **Feature Cards**: Smaller icons and text, better spacing
+- **Forms**: Reduced padding, smaller inputs, better label sizing
+- **Results**: Compact display with responsive grids
+- **Buttons**: Full-width on mobile, auto-width on desktop
+
+### 🔧 Technical Enhancements
+- Added mobile-specific CSS classes for consistent responsive behavior
+- Implemented responsive typography scale (xs/sm/md/lg)
+- Enhanced touch targets for better mobile interaction
+- Optimized container padding and margins for mobile screens
+
 ## [2.1.0] - 2024-08-15
 
 ### 🔧 Simplified Invitation Feature

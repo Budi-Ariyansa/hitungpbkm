@@ -97,17 +97,17 @@ export default function InvitationForm({ onCreateInvitation }: InvitationFormPro
   const today = new Date().toISOString().split('T')[0];
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
-      <form onSubmit={handleSubmit} className="space-y-8">
+    <div className="max-w-4xl mx-auto p-3 md:p-6">
+      <form onSubmit={handleSubmit} className="space-y-6 md:space-y-8">
         {/* Informasi Lapangan */}
         <div className="card">
           <h2 className="section-title">
-            <MapPin className="w-5 h-5 text-primary-600" />
+            <MapPin className="w-4 h-4 md:w-5 md:h-5 text-primary-600" />
             Informasi Lapangan
           </h2>
-          <div className="grid grid-cols-1 gap-6">
+          <div className="grid grid-cols-1 gap-4 md:gap-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block mobile-label mb-2">
                 Nama Lapangan *
               </label>
               <input
@@ -120,7 +120,7 @@ export default function InvitationForm({ onCreateInvitation }: InvitationFormPro
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block mobile-label mb-2">
                 Link Google Maps (Opsional)
               </label>
               <input
@@ -140,12 +140,12 @@ export default function InvitationForm({ onCreateInvitation }: InvitationFormPro
         {/* Informasi Waktu */}
         <div className="card">
           <h2 className="section-title">
-            <Calendar className="w-5 h-5 text-primary-600" />
+            <Calendar className="w-4 h-4 md:w-5 md:h-5 text-primary-600" />
             Waktu Bermain
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block mobile-label mb-2">
                 Tanggal Bermain *
               </label>
               <input
@@ -158,7 +158,7 @@ export default function InvitationForm({ onCreateInvitation }: InvitationFormPro
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block mobile-label mb-2">
                 Jam Mulai *
               </label>
               <input
@@ -170,7 +170,7 @@ export default function InvitationForm({ onCreateInvitation }: InvitationFormPro
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block mobile-label mb-2">
                 Jam Selesai *
               </label>
               <input
@@ -187,14 +187,14 @@ export default function InvitationForm({ onCreateInvitation }: InvitationFormPro
         {/* Upload Gambar */}
         <div className="card">
           <h2 className="section-title">
-            <ImageIcon className="w-5 h-5 text-primary-600" />
+            <ImageIcon className="w-4 h-4 md:w-5 md:h-5 text-primary-600" />
             Gambar Undangan (Opsional)
           </h2>
           <div className="space-y-4">
             {!formData.imagePreview ? (
-              <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
-                <ImageIcon className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                <p className="text-gray-600 mb-4">Upload gambar untuk undangan (maksimal 5MB)</p>
+              <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 md:p-6 text-center">
+                <ImageIcon className="w-8 h-8 md:w-12 md:h-12 text-gray-400 mx-auto mb-3 md:mb-4" />
+                <p className="text-gray-600 mb-3 md:mb-4 text-sm md:text-base">Upload gambar untuk undangan (maksimal 5MB)</p>
                 <input
                   ref={fileInputRef}
                   type="file"
@@ -205,9 +205,9 @@ export default function InvitationForm({ onCreateInvitation }: InvitationFormPro
                 <button
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
-                  className="btn-secondary flex items-center gap-2 mx-auto"
+                  className="btn-secondary flex items-center gap-2 mx-auto text-sm"
                 >
-                  <Upload className="w-4 h-4" />
+                  <Upload className="w-3 h-3 md:w-4 md:h-4" />
                   Pilih Gambar
                 </button>
               </div>
@@ -216,14 +216,14 @@ export default function InvitationForm({ onCreateInvitation }: InvitationFormPro
                 <img
                   src={formData.imagePreview}
                   alt="Preview"
-                  className="w-full max-w-md mx-auto rounded-lg shadow-md"
+                  className="w-full max-w-sm md:max-w-md mx-auto rounded-lg shadow-md"
                 />
                 <button
                   type="button"
                   onClick={removeImage}
-                  className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-2 hover:bg-red-600"
+                  className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1.5 md:p-2 hover:bg-red-600"
                 >
-                  <ImageIcon className="w-4 h-4" />
+                  <ImageIcon className="w-3 h-3 md:w-4 md:h-4" />
                 </button>
               </div>
             )}
@@ -233,14 +233,14 @@ export default function InvitationForm({ onCreateInvitation }: InvitationFormPro
         {/* Catatan Tambahan */}
         <div className="card">
           <h2 className="section-title">
-            <Info className="w-5 h-5 text-primary-600" />
+            <Info className="w-4 h-4 md:w-5 md:h-5 text-primary-600" />
             Catatan Tambahan (Opsional)
           </h2>
           <textarea
             value={formData.additionalNotes}
             onChange={(e) => setFormData(prev => ({ ...prev, additionalNotes: e.target.value }))}
             className="input-field resize-none"
-            rows={4}
+            rows={3}
             placeholder="Catatan khusus, aturan, atau informasi penting lainnya..."
           />
         </div>
@@ -249,9 +249,9 @@ export default function InvitationForm({ onCreateInvitation }: InvitationFormPro
         <div className="text-center">
           <button
             type="submit"
-            className="btn-primary text-lg px-8 py-4 flex items-center gap-3 mx-auto"
+            className="btn-primary text-sm md:text-lg px-6 md:px-8 py-3 md:py-4 flex items-center gap-2 md:gap-3 mx-auto w-full sm:w-auto"
           >
-            <Send className="w-5 h-5" />
+            <Send className="w-4 h-4 md:w-5 md:h-5" />
             Buat Undangan
           </button>
         </div>

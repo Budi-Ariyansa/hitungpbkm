@@ -239,13 +239,13 @@ ${data.additionalInfo ? `📝 Catatan:\n${data.additionalInfo}\n` : ''}
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 md:space-y-6">
       {/* Summary Content - untuk di-capture sebagai PDF/Image */}
-      <div ref={summaryRef} className="bg-white p-6 rounded-lg shadow-sm export-content">
+      <div ref={summaryRef} className="bg-white p-4 md:p-6 rounded-lg shadow-sm export-content">
         {/* Header dengan Logo */}
-        <div className="text-center mb-6">
-          <div className="flex justify-center items-center gap-4 mb-4">
-            <div className="relative w-16 h-16">
+        <div className="text-center mb-4 md:mb-6">
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-3 md:gap-4 mb-3 md:mb-4">
+            <div className="relative w-12 h-12 md:w-16 md:h-16 flex-shrink-0">
               <NextImage
                 src="/logo-pbkm.jpg"
                 alt="PB Kena Mental Logo"
@@ -253,105 +253,105 @@ ${data.additionalInfo ? `📝 Catatan:\n${data.additionalInfo}\n` : ''}
                 className="rounded-full object-cover shadow-lg"
               />
             </div>
-            <div>
-              <h1 className="text-3xl font-bold text-gray-800">
+            <div className="text-center sm:text-left">
+              <h1 className="text-xl md:text-3xl font-bold text-gray-800">
                 🏸 Ringkasan Biaya Badminton
               </h1>
-              <p className="text-gray-600">PB Kena Mental</p>
+              <p className="mobile-subtitle">PB Kena Mental</p>
             </div>
           </div>
-          <p className="text-gray-600">{formatDate()}</p>
+          <p className="mobile-subtitle">{formatDate()}</p>
         </div>
 
         {/* Informasi Lapangan */}
-        <div className="card mb-6">
+        <div className="card mb-4 md:mb-6">
           <h2 className="section-title">
-            <MapPin className="w-5 h-5 text-primary-600" />
+            <MapPin className="w-4 h-4 md:w-5 md:h-5 text-primary-600" />
             Informasi Lapangan
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="bg-gray-50 p-4 rounded-lg">
-              <p className="text-sm text-gray-600">Nama Lapangan</p>
-              <p className="font-semibold text-lg">{data.courtName}</p>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+            <div className="bg-gray-50 p-3 md:p-4 rounded-lg">
+              <p className="text-xs md:text-sm text-gray-600">Nama Lapangan</p>
+              <p className="mobile-value">{data.courtName}</p>
             </div>
-            <div className="bg-gray-50 p-4 rounded-lg">
-              <p className="text-sm text-gray-600">Biaya per Jam</p>
-              <p className="font-semibold text-lg">{formatCurrency(data.hourlyRate)}</p>
+            <div className="bg-gray-50 p-3 md:p-4 rounded-lg">
+              <p className="text-xs md:text-sm text-gray-600">Biaya per Jam</p>
+              <p className="mobile-value">{formatCurrency(data.hourlyRate)}</p>
             </div>
-            <div className="bg-gray-50 p-4 rounded-lg">
-              <p className="text-sm text-gray-600">Durasi Sewa</p>
-              <p className="font-semibold text-lg">{data.duration} jam</p>
+            <div className="bg-gray-50 p-3 md:p-4 rounded-lg">
+              <p className="text-xs md:text-sm text-gray-600">Durasi Sewa</p>
+              <p className="mobile-value">{data.duration} jam</p>
             </div>
-            <div className="bg-gray-50 p-4 rounded-lg">
-              <p className="text-sm text-gray-600">Waktu Bermain</p>
-              <p className="font-semibold text-sm">
+            <div className="bg-gray-50 p-3 md:p-4 rounded-lg">
+              <p className="text-xs md:text-sm text-gray-600">Waktu Bermain</p>
+              <p className="text-xs md:text-sm font-semibold">
                 {data.playDate && new Date(data.playDate).toLocaleDateString('id-ID', { 
                   weekday: 'short', 
                   day: 'numeric', 
                   month: 'short' 
                 })}
               </p>
-              <p className="font-semibold text-sm">{data.playTime}</p>
+              <p className="text-xs md:text-sm font-semibold">{data.playTime}</p>
             </div>
           </div>
         </div>
 
         {/* Rincian Biaya */}
-        <div className="card mb-6">
+        <div className="card mb-4 md:mb-6">
           <h2 className="section-title">
-            <DollarSign className="w-5 h-5 text-primary-600" />
+            <DollarSign className="w-4 h-4 md:w-5 md:h-5 text-primary-600" />
             Rincian Biaya
           </h2>
-          <div className="space-y-4">
-            <div className="flex justify-between items-center py-3 border-b border-gray-200">
+          <div className="space-y-3 md:space-y-4">
+            <div className="flex justify-between items-center py-2 md:py-3 border-b border-gray-200">
               <div>
-                <p className="font-medium">Biaya Sewa Lapangan</p>
-                <p className="text-sm text-gray-600">{data.duration} jam × {formatCurrency(data.hourlyRate)}</p>
+                <p className="mobile-card-title">Biaya Sewa Lapangan</p>
+                <p className="text-xs md:text-sm text-gray-600">{data.duration} jam × {formatCurrency(data.hourlyRate)}</p>
               </div>
-              <p className="font-semibold text-lg">{formatCurrency(result.courtCost)}</p>
+              <p className="mobile-value">{formatCurrency(result.courtCost)}</p>
             </div>
             
-            <div className="flex justify-between items-center py-3 border-b border-gray-200">
+            <div className="flex justify-between items-center py-2 md:py-3 border-b border-gray-200">
               <div>
-                <p className="font-medium">Biaya Shuttlecock</p>
-                <p className="text-sm text-gray-600">{data.shuttlecockUsed} pcs × {formatCurrency(data.shuttlecockPrice)}</p>
+                <p className="mobile-card-title">Biaya Shuttlecock</p>
+                <p className="text-xs md:text-sm text-gray-600">{data.shuttlecockUsed} pcs × {formatCurrency(data.shuttlecockPrice)}</p>
               </div>
-              <p className="font-semibold text-lg">{formatCurrency(result.shuttlecockCost)}</p>
+              <p className="mobile-value">{formatCurrency(result.shuttlecockCost)}</p>
             </div>
             
-            <div className="flex justify-between items-center py-4 bg-primary-50 px-4 rounded-lg border-2 border-primary-200">
+            <div className="flex justify-between items-center py-3 md:py-4 bg-primary-50 px-3 md:px-4 rounded-lg border-2 border-primary-200">
               <div>
-                <p className="font-bold text-lg">Total Biaya</p>
+                <p className="text-base md:text-lg font-bold">Total Biaya</p>
               </div>
-              <p className="font-bold text-2xl text-primary-700">{formatCurrency(result.totalCost)}</p>
+              <p className="mobile-large-value text-primary-700">{formatCurrency(result.totalCost)}</p>
             </div>
           </div>
         </div>
 
         {/* Pembagian Biaya */}
-        <div className="card mb-6">
+        <div className="card mb-4 md:mb-6">
           <h2 className="section-title">
-            <Users className="w-5 h-5 text-primary-600" />
+            <Users className="w-4 h-4 md:w-5 md:h-5 text-primary-600" />
             Pembagian Biaya
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-success-50 p-6 rounded-lg border-2 border-success-200">
-              <p className="text-success-700 font-medium mb-2">Jumlah Pemain</p>
-              <p className="text-3xl font-bold text-success-800">{result.playerCount} orang</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+            <div className="bg-success-50 p-4 md:p-6 rounded-lg border-2 border-success-200">
+              <p className="text-success-700 font-medium mb-1 md:mb-2 text-sm md:text-base">Jumlah Pemain</p>
+              <p className="text-2xl md:text-3xl font-bold text-success-800">{result.playerCount} orang</p>
             </div>
-            <div className="bg-primary-50 p-6 rounded-lg border-2 border-primary-200">
-              <p className="text-primary-700 font-medium mb-2">Biaya per Orang</p>
-              <p className="text-3xl font-bold text-primary-800">{formatCurrency(result.costPerPerson)}</p>
+            <div className="bg-primary-50 p-4 md:p-6 rounded-lg border-2 border-primary-200">
+              <p className="text-primary-700 font-medium mb-1 md:mb-2 text-sm md:text-base">Biaya per Orang</p>
+              <p className="text-2xl md:text-3xl font-bold text-primary-800">{formatCurrency(result.costPerPerson)}</p>
             </div>
           </div>
           
-          <div className="mt-6">
-            <h3 className="font-semibold text-gray-800 mb-3">Daftar Pemain:</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+          <div className="mt-4 md:mt-6">
+            <h3 className="mobile-card-title mb-2 md:mb-3">Daftar Pemain:</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-3">
               {data.players.map((player, index) => (
-                <div key={player.id} className="bg-gray-50 p-3 rounded-lg">
-                  <p className="font-medium">{index + 1}. {player.name}</p>
-                  <p className="text-sm text-gray-600">{formatCurrency(result.costPerPerson)}</p>
+                <div key={player.id} className="bg-gray-50 p-2 md:p-3 rounded-lg">
+                  <p className="mobile-card-title">{index + 1}. {player.name}</p>
+                  <p className="text-xs md:text-sm text-gray-600">{formatCurrency(result.costPerPerson)}</p>
                 </div>
               ))}
             </div>
@@ -359,51 +359,53 @@ ${data.additionalInfo ? `📝 Catatan:\n${data.additionalInfo}\n` : ''}
         </div>
 
         {/* Informasi Transfer */}
-        <div className="card mb-6">
-          <h2 className="section-title">
-            <CreditCard className="w-5 h-5 text-primary-600" />
-            Informasi Transfer
-          </h2>
-          <div className="space-y-4">
-            {data.bankAccounts.map((account, index) => (
-              <div key={account.id} className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-                <div className="flex justify-between items-start mb-2">
-                  <h3 className="font-semibold text-gray-800">Rekening {index + 1}</h3>
-                  <span className="bg-primary-100 text-primary-800 px-2 py-1 rounded text-sm font-medium">
-                    {account.bankName}
-                  </span>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  <div>
-                    <p className="text-sm text-gray-600">Nomor Rekening</p>
-                    <p className="font-mono font-semibold text-lg">{account.accountNumber}</p>
+        {data.bankAccounts.length > 0 && (
+          <div className="card mb-4 md:mb-6">
+            <h2 className="section-title">
+              <CreditCard className="w-4 h-4 md:w-5 md:h-5 text-primary-600" />
+              Informasi Transfer
+            </h2>
+            <div className="space-y-3 md:space-y-4">
+              {data.bankAccounts.map((account, index) => (
+                <div key={account.id} className="bg-gray-50 p-3 md:p-4 rounded-lg border border-gray-200">
+                  <div className="flex justify-between items-start mb-2">
+                    <h3 className="mobile-card-title">Rekening {index + 1}</h3>
+                    <span className="bg-primary-100 text-primary-800 px-2 py-1 rounded text-xs font-medium">
+                      {account.bankName}
+                    </span>
                   </div>
-                  <div>
-                    <p className="text-sm text-gray-600">Nama Pemilik</p>
-                    <p className="font-semibold">{account.accountName}</p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-3">
+                    <div>
+                      <p className="text-xs md:text-sm text-gray-600">Nomor Rekening</p>
+                      <p className="font-mono font-semibold text-sm md:text-lg">{account.accountNumber}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs md:text-sm text-gray-600">Nama Pemilik</p>
+                      <p className="mobile-card-title">{account.accountName}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Informasi Tambahan */}
         {data.additionalInfo && (
           <div className="card">
             <h2 className="section-title">
-              <Info className="w-5 h-5 text-primary-600" />
+              <Info className="w-4 h-4 md:w-5 md:h-5 text-primary-600" />
               Informasi Tambahan
             </h2>
-            <div className="bg-gray-50 p-4 rounded-lg">
-              <p className="whitespace-pre-wrap">{data.additionalInfo}</p>
+            <div className="bg-gray-50 p-3 md:p-4 rounded-lg">
+              <p className="whitespace-pre-wrap text-sm md:text-base">{data.additionalInfo}</p>
             </div>
           </div>
         )}
       </div>
 
       {/* Action Buttons */}
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-3 md:gap-4">
         {/* Share Button */}
         <div className="flex justify-center">
           <button
@@ -416,7 +418,7 @@ ${data.additionalInfo ? `📝 Catatan:\n${data.additionalInfo}\n` : ''}
         </div>
 
         {/* Download Options */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4">
           <button
             onClick={handleDownload}
             disabled={isGenerating}
@@ -432,7 +434,7 @@ ${data.additionalInfo ? `📝 Catatan:\n${data.additionalInfo}\n` : ''}
             className="btn-secondary flex items-center justify-center gap-2"
           >
             <FileDown className="w-4 h-4" />
-            {isGenerating ? 'Membuat PDF...' : 'Download PDF'}
+            <span className="text-xs md:text-sm">{isGenerating ? 'Membuat PDF...' : 'Download PDF'}</span>
           </button>
           
           <button
@@ -441,7 +443,7 @@ ${data.additionalInfo ? `📝 Catatan:\n${data.additionalInfo}\n` : ''}
             className="btn-secondary flex items-center justify-center gap-2"
           >
             <Image className="w-4 h-4" />
-            {isGenerating ? 'Membuat Gambar...' : 'Download PNG'}
+            <span className="text-xs md:text-sm">{isGenerating ? 'Membuat Gambar...' : 'Download PNG'}</span>
           </button>
         </div>
 

@@ -135,17 +135,17 @@ export default function CalculatorForm({ onCalculate }: CalculatorFormProps) {
   const today = new Date().toISOString().split('T')[0];
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
-      <form onSubmit={handleSubmit} className="space-y-8">
+    <div className="max-w-4xl mx-auto p-3 md:p-6">
+      <form onSubmit={handleSubmit} className="space-y-6 md:space-y-8">
         {/* Informasi Lapangan */}
         <div className="card">
           <h2 className="section-title">
-            <MapPin className="w-5 h-5 text-primary-600" />
+            <MapPin className="w-4 h-4 md:w-5 md:h-5 text-primary-600" />
             Informasi Lapangan
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block mobile-label mb-2">
                 Nama Lapangan *
               </label>
               <input
@@ -158,7 +158,7 @@ export default function CalculatorForm({ onCalculate }: CalculatorFormProps) {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block mobile-label mb-2">
                 Biaya Sewa per Jam (Rp) *
               </label>
               <input
@@ -172,7 +172,7 @@ export default function CalculatorForm({ onCalculate }: CalculatorFormProps) {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block mobile-label mb-2">
                 Lama Sewa (Jam) *
               </label>
               <input
@@ -192,12 +192,12 @@ export default function CalculatorForm({ onCalculate }: CalculatorFormProps) {
         {/* Informasi Waktu Bermain */}
         <div className="card">
           <h2 className="section-title">
-            <Calendar className="w-5 h-5 text-primary-600" />
+            <Calendar className="w-4 h-4 md:w-5 md:h-5 text-primary-600" />
             Waktu Bermain
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block mobile-label mb-2">
                 Tanggal Bermain *
               </label>
               <input
@@ -210,7 +210,7 @@ export default function CalculatorForm({ onCalculate }: CalculatorFormProps) {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block mobile-label mb-2">
                 Jam Bermain *
               </label>
               <input
@@ -227,12 +227,12 @@ export default function CalculatorForm({ onCalculate }: CalculatorFormProps) {
         {/* Informasi Shuttlecock */}
         <div className="card">
           <h2 className="section-title">
-            <DollarSign className="w-5 h-5 text-primary-600" />
+            <DollarSign className="w-4 h-4 md:w-5 md:h-5 text-primary-600" />
             Informasi Shuttlecock
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block mobile-label mb-2">
                 Biaya per Shuttlecock (Rp) *
               </label>
               <input
@@ -246,7 +246,7 @@ export default function CalculatorForm({ onCalculate }: CalculatorFormProps) {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block mobile-label mb-2">
                 Total Shuttlecock Habis (pcs) *
               </label>
               <input
@@ -264,21 +264,21 @@ export default function CalculatorForm({ onCalculate }: CalculatorFormProps) {
 
         {/* Informasi Pemain */}
         <div className="card">
-          <div className="flex justify-between items-center mb-4">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-4">
             <h2 className="section-title mb-0">
-              <Users className="w-5 h-5 text-primary-600" />
-              Daftar Pemain ({formData.players.length} orang)
+              <Users className="w-4 h-4 md:w-5 md:h-5 text-primary-600" />
+              <span className="text-sm md:text-lg">Daftar Pemain ({formData.players.length} orang)</span>
             </h2>
             <button
               type="button"
               onClick={addPlayer}
-              className="btn-primary flex items-center gap-2 text-sm py-2 px-4"
+              className="btn-primary flex items-center justify-center gap-2 text-xs md:text-sm py-2 px-3 md:py-2 md:px-4 w-full sm:w-auto"
             >
-              <Plus className="w-4 h-4" />
+              <Plus className="w-3 h-3 md:w-4 md:h-4" />
               Tambah Pemain
             </button>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
             {formData.players.map((player, index) => (
               <div key={player.id} className="flex gap-2">
                 <div className="flex-1">
@@ -294,9 +294,9 @@ export default function CalculatorForm({ onCalculate }: CalculatorFormProps) {
                   <button
                     type="button"
                     onClick={() => removePlayer(player.id)}
-                    className="btn-secondary px-3 py-2 text-red-600 hover:bg-red-50"
+                    className="btn-secondary px-2 md:px-3 py-2 text-red-600 hover:bg-red-50 flex-shrink-0"
                   >
-                    <X className="w-4 h-4" />
+                    <X className="w-3 h-3 md:w-4 md:h-4" />
                   </button>
                 )}
               </div>
@@ -306,41 +306,41 @@ export default function CalculatorForm({ onCalculate }: CalculatorFormProps) {
 
         {/* Informasi Rekening */}
         <div className="card">
-          <div className="flex justify-between items-center mb-4">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-4">
             <h2 className="section-title mb-0">
-              <CreditCard className="w-5 h-5 text-primary-600" />
-              Informasi Rekening Transfer (Opsional)
+              <CreditCard className="w-4 h-4 md:w-5 md:h-5 text-primary-600" />
+              <span className="text-sm md:text-lg">Informasi Rekening Transfer (Opsional)</span>
             </h2>
             <button
               type="button"
               onClick={addBankAccount}
-              className="btn-secondary flex items-center gap-2 text-sm py-2 px-4"
+              className="btn-secondary flex items-center justify-center gap-2 text-xs md:text-sm py-2 px-3 md:py-2 md:px-4 w-full sm:w-auto"
             >
-              <Plus className="w-4 h-4" />
+              <Plus className="w-3 h-3 md:w-4 md:h-4" />
               Tambah Rekening
             </button>
           </div>
           {formData.bankAccounts.length === 0 ? (
-            <p className="text-gray-500 text-center py-4">
+            <p className="text-gray-500 text-center py-4 text-sm">
               Belum ada rekening ditambahkan. Klik "Tambah Rekening" untuk menambah informasi transfer.
             </p>
           ) : (
             <div className="space-y-4">
               {formData.bankAccounts.map((account, index) => (
-                <div key={account.id} className="border border-gray-200 rounded-lg p-4 bg-gray-50">
+                <div key={account.id} className="border border-gray-200 rounded-lg p-3 md:p-4 bg-gray-50">
                   <div className="flex justify-between items-center mb-3">
-                    <h3 className="font-medium text-gray-800">Rekening {index + 1}</h3>
+                    <h3 className="mobile-card-title">Rekening {index + 1}</h3>
                     <button
                       type="button"
                       onClick={() => removeBankAccount(account.id)}
                       className="text-red-600 hover:bg-red-100 p-1 rounded"
                     >
-                      <X className="w-4 h-4" />
+                      <X className="w-3 h-3 md:w-4 md:h-4" />
                     </button>
                   </div>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                      <label className="block mobile-label mb-1">
                         Nama Bank
                       </label>
                       <input
@@ -352,7 +352,7 @@ export default function CalculatorForm({ onCalculate }: CalculatorFormProps) {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                      <label className="block mobile-label mb-1">
                         Nomor Rekening
                       </label>
                       <input
@@ -364,7 +364,7 @@ export default function CalculatorForm({ onCalculate }: CalculatorFormProps) {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                      <label className="block mobile-label mb-1">
                         Nama Pemilik
                       </label>
                       <input
@@ -385,14 +385,14 @@ export default function CalculatorForm({ onCalculate }: CalculatorFormProps) {
         {/* Informasi Tambahan */}
         <div className="card">
           <h2 className="section-title">
-            <Info className="w-5 h-5 text-primary-600" />
+            <Info className="w-4 h-4 md:w-5 md:h-5 text-primary-600" />
             Informasi Tambahan (Opsional)
           </h2>
           <textarea
             value={formData.additionalInfo}
             onChange={(e) => setFormData(prev => ({ ...prev, additionalInfo: e.target.value }))}
             className="input-field resize-none"
-            rows={4}
+            rows={3}
             placeholder="Catatan tambahan, aturan main, meeting point, dll..."
           />
         </div>
@@ -401,9 +401,9 @@ export default function CalculatorForm({ onCalculate }: CalculatorFormProps) {
         <div className="text-center">
           <button
             type="submit"
-            className="btn-primary text-lg px-8 py-4 flex items-center gap-3 mx-auto"
+            className="btn-primary text-sm md:text-lg px-6 md:px-8 py-3 md:py-4 flex items-center gap-2 md:gap-3 mx-auto w-full sm:w-auto"
           >
-            <Calculator className="w-5 h-5" />
+            <Calculator className="w-4 h-4 md:w-5 md:h-5" />
             Hitung Biaya Badminton
           </button>
         </div>
