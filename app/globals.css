@@ -1,0 +1,94 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply bg-gray-50 text-gray-900;
+  }
+}
+
+@layer components {
+  .input-field {
+    @apply w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 bg-white;
+  }
+  
+  .btn-primary {
+    @apply bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-primary-600;
+  }
+  
+  .btn-secondary {
+    @apply bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-3 px-6 rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-gray-200;
+  }
+  
+  .card {
+    @apply bg-white rounded-xl shadow-lg border border-gray-100 p-6;
+  }
+  
+  .section-title {
+    @apply text-xl font-bold text-gray-800 mb-4 flex items-center gap-2;
+  }
+}
+
+/* Print and Export Styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  .print-friendly {
+    background: white !important;
+    color: black !important;
+    box-shadow: none !important;
+  }
+}
+
+/* Ensure good contrast for PDF/Image export */
+.export-content {
+  background: white;
+  color: #1f2937;
+}
+
+.export-content .bg-primary-50 {
+  background-color: #eff6ff !important;
+}
+
+.export-content .bg-success-50 {
+  background-color: #f0fdf4 !important;
+}
+
+.export-content .bg-gray-50 {
+  background-color: #f9fafb !important;
+}
+
+.export-content .text-primary-600 {
+  color: #2563eb !important;
+}
+
+.export-content .text-primary-700 {
+  color: #1d4ed8 !important;
+}
+
+.export-content .text-primary-800 {
+  color: #1e40af !important;
+}
+
+.export-content .text-success-700 {
+  color: #15803d !important;
+}
+
+.export-content .text-success-800 {
+  color: #166534 !important;
+}
+
+.export-content .border-primary-200 {
+  border-color: #dbeafe !important;
+}
+
+.export-content .border-success-200 {
+  border-color: #bbf7d0 !important;
+}
