@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Kalkulator Biaya Badminton - PB Kena Mental',
+  title: 'Aplikasi Badminton - PB Kena Mental',
   description: 'Aplikasi perhitungan biaya sewa lapangan badminton dan pembagian biaya per orang',
   keywords: 'badminton, kalkulator, biaya, lapangan, shuttlecock, PB Kena Mental',
   authors: [{ name: 'PB Kena Mental' }],
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   },
   manifest: '/manifest.json',
   openGraph: {
-    title: 'Kalkulator Biaya Badminton - PB Kena Mental',
+    title: 'Aplikasi Badminton - PB Kena Mental',
     description: 'Aplikasi untuk menghitung biaya sewa lapangan badminton dan pembagian biaya per orang',
     type: 'website',
     locale: 'id_ID',
