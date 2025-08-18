@@ -1,53 +1,143 @@
 'use client';
 
-import React, { useState } from 'react';
-import { Plus, X, MapPin, Clock, Users, DollarSign, CreditCard, Info, Calculator, Calendar, Timer } from 'lucide-react';
-import { CalculationData, Player, BankAccount } from '@/types';
+import React, { useState, useEffect } from 'react';
+import { Plus, X, MapPin, Clock, Users, DollarSign, CreditCard, Info, Calculator, Calendar, Timer, Check } from 'lucide-react';
+import { CalculationData, Player, BankAccount, Court, PlayerData, Bank } from '@/types';
 
 interface CalculatorFormProps {
   onCalculate: (data: CalculationData) => void;
 }
 
 export default function CalculatorForm({ onCalculate }: CalculatorFormProps) {
+  const [courts, setCourts] = useState<Court[]>([]);
+  const [banks, setBanks] = useState<Bank[]>([]);
+  const [availablePlayers, setAvailablePlayers] = useState<PlayerData[]>([]);
+  const [filteredPlayers, setFilteredPlayers] = useState<PlayerData[]>([]);
+  const [selectedPlayerIds, setSelectedPlayerIds] = useState<string[]>([]);
+  const [playerSearchTerm, setPlayerSearchTerm] = useState('');
+  
   const [formData, setFormData] = useState<CalculationData>({
     courtName: '',
     hourlyRate: 0,
     duration: 0,
     shuttlecockPrice: 0,
     shuttlecockUsed: 0,
-    players: [{ id: '1', name: '' }],
+    players: [],
     playDate: '',
     playTime: '',
     additionalInfo: '',
     bankAccounts: []
   });
 
-  const addPlayer = () => {
-    const newPlayer: Player = {
-      id: Date.now().toString(),
-      name: ''
-    };
-    setFormData(prev => ({
-      ...prev,
-      players: [...prev.players, newPlayer]
-    }));
-  };
+  // Load courts, banks, and players data
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        // Load courts data
+        const courtsResponse = await fetch('/data/courts.json');
+        const courtsData = await courtsResponse.json();
+        setCourts(courtsData);
 
-  const removePlayer = (id: string) => {
-    if (formData.players.length > 1) {
+        // Load banks data
+        const banksResponse = await fetch('/data/banks.json');
+        const banksData = await banksResponse.json();
+        setBanks(banksData);
+
+        // Load players data
+        const playersResponse = await fetch('/data/players.json');
+        const playersData = await playersResponse.json();
+        setAvailablePlayers(playersData);
+        setFilteredPlayers(playersData);
+      } catch (error) {
+        console.error('Error loading data:', error);
+      }
+    };
+
+    loadData();
+  }, []);
+
+  // Filter players based on search term
+  useEffect(() => {
+    if (!playerSearchTerm.trim()) {
+      setFilteredPlayers(availablePlayers);
+    } else {
+      const filtered = availablePlayers.filter(player =>
+        player.name.toLowerCase().includes(playerSearchTerm.toLowerCase()) ||
+        player.nickname.toLowerCase().includes(playerSearchTerm.toLowerCase())
+      );
+      setFilteredPlayers(filtered);
+    }
+  }, [playerSearchTerm, availablePlayers]);
+
+  // Handle court selection
+  const handleCourtChange = (courtId: string) => {
+    const selectedCourt = courts.find(court => court.id === courtId);
+    if (selectedCourt) {
       setFormData(prev => ({
         ...prev,
-        players: prev.players.filter(player => player.id !== id)
+        courtName: selectedCourt.name
       }));
     }
   };
 
-  const updatePlayer = (id: string, name: string) => {
+  // Handle bank selection
+  const handleBankChange = (accountId: string, bankId: string) => {
+    const selectedBank = banks.find(bank => bank.id === bankId);
+    if (selectedBank) {
+      setFormData(prev => ({
+        ...prev,
+        bankAccounts: prev.bankAccounts.map(account =>
+          account.id === accountId ? { ...account, bankName: selectedBank.name } : account
+        )
+      }));
+    }
+  };
+
+  // Handle player selection
+  const togglePlayerSelection = (playerId: string) => {
+    setSelectedPlayerIds(prev => {
+      const newSelection = prev.includes(playerId)
+        ? prev.filter(id => id !== playerId)
+        : [...prev, playerId];
+      
+      // Update formData players
+      const selectedPlayers = availablePlayers
+        .filter(player => newSelection.includes(player.id))
+        .map(player => ({ id: player.id, name: player.name }));
+      
+      setFormData(prevFormData => ({
+        ...prevFormData,
+        players: selectedPlayers
+      }));
+      
+      return newSelection;
+    });
+  };
+
+  // Select all filtered players
+  const selectAllPlayers = () => {
+    const allFilteredIds = filteredPlayers.map(player => player.id);
+    const uniqueIds = new Set([...selectedPlayerIds, ...allFilteredIds]);
+    const newSelection = Array.from(uniqueIds);
+    
+    setSelectedPlayerIds(newSelection);
+    
+    const selectedPlayers = availablePlayers
+      .filter(player => newSelection.includes(player.id))
+      .map(player => ({ id: player.id, name: player.name }));
+    
     setFormData(prev => ({
       ...prev,
-      players: prev.players.map(player =>
-        player.id === id ? { ...player, name } : player
-      )
+      players: selectedPlayers
+    }));
+  };
+
+  // Clear all selected players
+  const clearAllPlayers = () => {
+    setSelectedPlayerIds([]);
+    setFormData(prev => ({
+      ...prev,
+      players: []
     }));
   };
 
@@ -85,7 +175,7 @@ export default function CalculatorForm({ onCalculate }: CalculatorFormProps) {
     
     // Validasi form
     if (!formData.courtName.trim()) {
-      alert('Nama lapangan harus diisi');
+      alert('Lapangan harus dipilih');
       return;
     }
     
@@ -109,9 +199,8 @@ export default function CalculatorForm({ onCalculate }: CalculatorFormProps) {
       return;
     }
     
-    const validPlayers = formData.players.filter(player => player.name.trim());
-    if (validPlayers.length === 0) {
-      alert('Minimal harus ada 1 pemain');
+    if (formData.players.length === 0) {
+      alert('Minimal harus ada 1 pemain yang dipilih');
       return;
     }
 
@@ -125,10 +214,7 @@ export default function CalculatorForm({ onCalculate }: CalculatorFormProps) {
       return;
     }
     
-    onCalculate({
-      ...formData,
-      players: validPlayers
-    });
+    onCalculate(formData);
   };
 
   // Get today's date for min date input
@@ -146,16 +232,21 @@ export default function CalculatorForm({ onCalculate }: CalculatorFormProps) {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
             <div>
               <label className="block mobile-label mb-2">
-                Nama Lapangan *
+                Pilih Lapangan *
               </label>
-              <input
-                type="text"
-                value={formData.courtName}
-                onChange={(e) => setFormData(prev => ({ ...prev, courtName: e.target.value }))}
+              <select
+                value={courts.find(court => court.name === formData.courtName)?.id || ''}
+                onChange={(e) => handleCourtChange(e.target.value)}
                 className="input-field"
-                placeholder="Contoh: GOR Badminton Sentral"
                 required
-              />
+              >
+                <option value="">-- Pilih Lapangan --</option>
+                {courts.map((court) => (
+                  <option key={court.id} value={court.id}>
+                    {court.name} - {court.location}
+                  </option>
+                ))}
+              </select>
             </div>
             <div>
               <label className="block mobile-label mb-2">
@@ -267,41 +358,118 @@ export default function CalculatorForm({ onCalculate }: CalculatorFormProps) {
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-4">
             <h2 className="section-title mb-0">
               <Users className="w-4 h-4 md:w-5 md:h-5 text-primary-600" />
-              <span className="text-sm md:text-lg">Daftar Pemain ({formData.players.length} orang)</span>
+              <span className="text-sm md:text-lg">Pilih Pemain ({selectedPlayerIds.length} orang)</span>
             </h2>
-            <button
-              type="button"
-              onClick={addPlayer}
-              className="btn-primary flex items-center justify-center gap-2 text-xs md:text-sm py-2 px-3 md:py-2 md:px-4 w-full sm:w-auto"
-            >
-              <Plus className="w-3 h-3 md:w-4 md:h-4" />
-              Tambah Pemain
-            </button>
+            <div className="flex gap-2">
+              <button
+                type="button"
+                onClick={selectAllPlayers}
+                className="btn-secondary text-xs px-2 py-1"
+                disabled={filteredPlayers.length === 0}
+              >
+                Pilih Semua
+              </button>
+              <button
+                type="button"
+                onClick={clearAllPlayers}
+                className="btn-secondary text-xs px-2 py-1 text-red-600 hover:bg-red-50"
+                disabled={selectedPlayerIds.length === 0}
+              >
+                Hapus Semua
+              </button>
+            </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
-            {formData.players.map((player, index) => (
-              <div key={player.id} className="flex gap-2">
-                <div className="flex-1">
-                  <input
-                    type="text"
-                    value={player.name}
-                    onChange={(e) => updatePlayer(player.id, e.target.value)}
-                    className="input-field"
-                    placeholder={`Nama Pemain ${index + 1}`}
-                  />
-                </div>
-                {formData.players.length > 1 && (
-                  <button
-                    type="button"
-                    onClick={() => removePlayer(player.id)}
-                    className="btn-secondary px-2 md:px-3 py-2 text-red-600 hover:bg-red-50 flex-shrink-0"
-                  >
-                    <X className="w-3 h-3 md:w-4 md:h-4" />
-                  </button>
-                )}
+          
+          {/* Search Input */}
+          <div className="mb-4">
+            <input
+              type="text"
+              value={playerSearchTerm}
+              onChange={(e) => setPlayerSearchTerm(e.target.value)}
+              className="input-field"
+              placeholder="Cari pemain berdasarkan nama atau nickname..."
+            />
+          </div>
+          
+          {availablePlayers.length === 0 ? (
+            <div className="text-center py-8 text-gray-500">
+              <Users className="w-12 h-12 mx-auto mb-2 opacity-50" />
+              <p>Memuat data pemain...</p>
+            </div>
+          ) : filteredPlayers.length === 0 ? (
+            <div className="text-center py-8 text-gray-500">
+              <Users className="w-12 h-12 mx-auto mb-2 opacity-50" />
+              <p>Tidak ada pemain yang sesuai dengan pencarian "{playerSearchTerm}"</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 md:gap-3">
+              {filteredPlayers.map((player) => (
+                <button
+                  key={player.id}
+                  type="button"
+                  onClick={() => togglePlayerSelection(player.id)}
+                  className={`
+                    relative p-3 rounded-lg border-2 transition-all duration-200 text-left
+                    ${selectedPlayerIds.includes(player.id)
+                      ? 'border-primary-500 bg-primary-50 text-primary-700'
+                      : 'border-gray-200 bg-white hover:border-gray-300 text-gray-700'
+                    }
+                  `}
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex-1 min-w-0">
+                      <div className="text-xs md:text-sm font-medium truncate">
+                        {player.name}
+                      </div>
+                      <div className="text-xs text-gray-500 truncate">
+                        {player.nickname}
+                      </div>
+                    </div>
+                    {selectedPlayerIds.includes(player.id) && (
+                      <Check className="w-4 h-4 text-primary-600 flex-shrink-0 ml-1" />
+                    )}
+                  </div>
+                </button>
+              ))}
+            </div>
+          )}
+          
+          {selectedPlayerIds.length === 0 && (
+            <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+              <p className="text-yellow-800 text-sm">
+                ⚠️ Pilih minimal 1 pemain untuk melanjutkan perhitungan
+              </p>
+            </div>
+          )}
+          
+          {/* Selected Players Summary */}
+          {selectedPlayerIds.length > 0 && (
+            <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-lg">
+              <p className="text-green-800 text-sm font-medium mb-2">
+                Pemain yang dipilih ({selectedPlayerIds.length} orang):
+              </p>
+              <div className="flex flex-wrap gap-1">
+                {selectedPlayerIds.map(playerId => {
+                  const player = availablePlayers.find(p => p.id === playerId);
+                  return player ? (
+                    <span
+                      key={playerId}
+                      className="inline-flex items-center gap-1 px-2 py-1 bg-green-100 text-green-700 rounded text-xs"
+                    >
+                      {player.nickname}
+                      <button
+                        type="button"
+                        onClick={() => togglePlayerSelection(playerId)}
+                        className="hover:bg-green-200 rounded-full p-0.5"
+                      >
+                        <X className="w-3 h-3" />
+                      </button>
+                    </span>
+                  ) : null;
+                })}
               </div>
-            ))}
-          </div>
+            </div>
+          )}
         </div>
 
         {/* Informasi Rekening */}
@@ -343,13 +511,18 @@ export default function CalculatorForm({ onCalculate }: CalculatorFormProps) {
                       <label className="block mobile-label mb-1">
                         Nama Bank
                       </label>
-                      <input
-                        type="text"
-                        value={account.bankName}
-                        onChange={(e) => updateBankAccount(account.id, 'bankName', e.target.value)}
+                      <select
+                        value={banks.find(bank => bank.name === account.bankName)?.id || ''}
+                        onChange={(e) => handleBankChange(account.id, e.target.value)}
                         className="input-field"
-                        placeholder="BCA, Mandiri, BRI, dll"
-                      />
+                      >
+                        <option value="">-- Pilih Bank --</option>
+                        {banks.map((bank) => (
+                          <option key={bank.id} value={bank.id}>
+                            {bank.name}
+                          </option>
+                        ))}
+                      </select>
                     </div>
                     <div>
                       <label className="block mobile-label mb-1">

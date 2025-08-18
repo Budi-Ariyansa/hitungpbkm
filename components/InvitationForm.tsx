@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { MapPin, Calendar, Clock, Info, Send, Upload, Image as ImageIcon } from 'lucide-react';
-import { InvitationData } from '@/types';
+import { InvitationData, Court } from '@/types';
 
 interface InvitationFormProps {
   onCreateInvitation: (data: InvitationData) => void;
@@ -10,6 +10,7 @@ interface InvitationFormProps {
 
 export default function InvitationForm({ onCreateInvitation }: InvitationFormProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [courts, setCourts] = useState<Court[]>([]);
   const [formData, setFormData] = useState<InvitationData>({
     courtName: '',
     courtLocation: '',
@@ -22,6 +23,32 @@ export default function InvitationForm({ onCreateInvitation }: InvitationFormPro
     additionalNotes: '',
     organizer: ''
   });
+
+  // Load courts data
+  useEffect(() => {
+    const loadCourts = async () => {
+      try {
+        const response = await fetch('/data/courts.json');
+        const data = await response.json();
+        setCourts(data);
+      } catch (error) {
+        console.error('Error loading courts data:', error);
+      }
+    };
+
+    loadCourts();
+  }, []);
+
+  // Handle court selection
+  const handleCourtChange = (courtId: string) => {
+    const selectedCourt = courts.find(court => court.id === courtId);
+    if (selectedCourt) {
+      setFormData(prev => ({
+        ...prev,
+        courtName: selectedCourt.name
+      }));
+    }
+  };
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -108,16 +135,21 @@ export default function InvitationForm({ onCreateInvitation }: InvitationFormPro
           <div className="grid grid-cols-1 gap-4 md:gap-6">
             <div>
               <label className="block mobile-label mb-2">
-                Nama Lapangan *
+                Pilih Lapangan *
               </label>
-              <input
-                type="text"
-                value={formData.courtName}
-                onChange={(e) => setFormData(prev => ({ ...prev, courtName: e.target.value }))}
+              <select
+                value={courts.find(court => court.name === formData.courtName)?.id || ''}
+                onChange={(e) => handleCourtChange(e.target.value)}
                 className="input-field"
-                placeholder="Contoh: GOR Badminton Sentral"
                 required
-              />
+              >
+                <option value="">-- Pilih Lapangan --</option>
+                {courts.map((court) => (
+                  <option key={court.id} value={court.id}>
+                    {court.name} - {court.location}
+                  </option>
+                ))}
+              </select>
             </div>
             <div>
               <label className="block mobile-label mb-2">

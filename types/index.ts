@@ -1,3 +1,9 @@
+export interface Bank {
+  id: string;
+  name: string;
+  code: string;
+}
+
 export interface BankAccount {
   id: string;
   bankName: string;
@@ -8,6 +14,18 @@ export interface BankAccount {
 export interface Player {
   id: string;
   name: string;
+}
+
+export interface Court {
+  id: string;
+  name: string;
+  location: string;
+}
+
+export interface PlayerData {
+  id: string;
+  name: string;
+  nickname: string;
 }
 
 export interface CalculationData {

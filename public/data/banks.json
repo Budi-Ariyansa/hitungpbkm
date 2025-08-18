@@ -1,0 +1,77 @@
+[
+  {
+    "id": "1",
+    "name": "BCA (Bank Central Asia)",
+    "code": "BCA"
+  },
+  {
+    "id": "2",
+    "name": "Mandiri",
+    "code": "MANDIRI"
+  },
+  {
+    "id": "3",
+    "name": "BRI (Bank Rakyat Indonesia)",
+    "code": "BRI"
+  },
+  {
+    "id": "4",
+    "name": "BNI (Bank Negara Indonesia)",
+    "code": "BNI"
+  },
+  {
+    "id": "5",
+    "name": "CIMB Niaga",
+    "code": "CIMB"
+  },
+  {
+    "id": "6",
+    "name": "Danamon",
+    "code": "DANAMON"
+  },
+  {
+    "id": "7",
+    "name": "Permata Bank",
+    "code": "PERMATA"
+  },
+  {
+    "id": "8",
+    "name": "OCBC NISP",
+    "code": "OCBC"
+  },
+  {
+    "id": "9",
+    "name": "Maybank",
+    "code": "MAYBANK"
+  },
+  {
+    "id": "10",
+    "name": "BTPN",
+    "code": "BTPN"
+  },
+  {
+    "id": "11",
+    "name": "BSI (Bank Syariah Indonesia)",
+    "code": "BSI"
+  },
+  {
+    "id": "12",
+    "name": "Jenius (BTPN)",
+    "code": "JENIUS"
+  },
+  {
+    "id": "13",
+    "name": "Digibank (DBS)",
+    "code": "DBS"
+  },
+  {
+    "id": "14",
+    "name": "Seabank",
+    "code": "SEABANK"
+  },
+  {
+    "id": "15",
+    "name": "Jago (Bank Jago)",
+    "code": "JAGO"
+  }
+]
